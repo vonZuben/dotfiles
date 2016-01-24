@@ -29,11 +29,11 @@ if [ ! $# -eq 0 ]; then
     fi
     if [ $1 == "-g" ]; then
         # this chould be updated to loop through all the folders smartly
-        cd ~/.vim/bundle/vim-airline && git pull 
-        #cd ~/.vim/bundle/nerdtree    && git pull 
-        cd ~/.vim/bundle/rust.vim    && git pull 
-        cd ~/.vim/bundle/racer       && git pull 
-        cd ~/.vim/bundle/vim-racer   && git pull 
+        cd ~/.vim/bundle/vim-airline && git pull
+        #cd ~/.vim/bundle/nerdtree    && git pull
+        cd ~/.vim/bundle/rust.vim    && git pull
+        cd ~/.vim/bundle/racer       && git pull
+        cd ~/.vim/bundle/vim-racer   && git pull
     fi
 
     echo "run fc-cache -fv to update fonts";

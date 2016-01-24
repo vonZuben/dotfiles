@@ -84,14 +84,14 @@ function! CnuComplete()
 endfunction
 
 function! Maping(completion, buffer)
-let s:mapletters = [
+let g:mapletters = [
     \ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     \ 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     \ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     \ 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     \ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    \ '_', ':', ]
-    for key in s:mapletters
+    \ '_', ':', '.', ]
+    for key in g:mapletters
         execute 'inoremap ' . a:buffer . key . ' ' . key . a:completion
     endfor
     "inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
@@ -101,13 +101,13 @@ let s:mapletters = [
 endfunction
 
 function! Unmap()
-    if !exists('s:mapletters')
+    if !exists('g:mapletters')
         return
     endif
-    for key in s:mapletters
+    for key in g:mapletters
         execute 'iunmap ' . key
     endfor
-    let s:mapletters = []
+    let g:mapletters = []
 endfunction
 
 call Maping('<C-N><C-P>', '')
@@ -124,7 +124,23 @@ let g:racer_cmd="~/.vim/racer/target/release/racer"
 let $RUST_SRC_PATH="/home/chris/gl/rust/src/"
 
 " map rust file buffers only with rust omni complete
-au BufRead *.rs call Maping('<C-X><C-O>', '<buffer>')
+" au BufRead *.rs call Maping('<C-X><C-O>', '<buffer>')
+
+" mapping for toggling the autocomplete type in for rust files
+let s:romni=0
+function! Toggleomni()
+    if s:romni
+        call Maping('<C-N><C-P>', '<buffer>')
+        let s:romni=0
+        echo "Normal COMPLETE"
+    else
+        call Maping('<C-X><C-O>', '<buffer>')
+        let s:romni=1
+        echo "OMNI COMPLETE"
+    endif
+endfunction
+
+nnoremap <Leader>r :call Toggleomni()<CR>
 
 "}}}
 
